@@ -1,3 +1,4 @@
+from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import generics
 from rest_framework import mixins
 
@@ -10,6 +11,8 @@ from .serializers import ProductSerializer
 class AttributeList(generics.ListCreateAPIView):
     queryset = Attribute.objects.all()
     serializer_class = AttributeSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('type', 'value')
 
 
 class AttributeDetail(mixins.RetrieveModelMixin,
@@ -37,6 +40,9 @@ class AttributeDelete(mixins.DestroyModelMixin,
 class ProductList(generics.ListCreateAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+    filter_backends = (DjangoFilterBackend,)
+    filter_fields = ('name', 'price', 'manufacturer', 'product_type', 'release_date', 'created_at', 'modified_at',
+                     'attributes__type', 'attributes__value')
 
 
 class ProductDetail(mixins.RetrieveModelMixin,

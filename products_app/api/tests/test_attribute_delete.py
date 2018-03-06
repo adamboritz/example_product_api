@@ -6,6 +6,7 @@ from .test_case_setup import TestCaseSetup
 
 class WhenSendingAPostForAValidAttributeToDelete(TestCaseSetup):
     """This class defines the test suite for a valid POST request to delete an attribute"""
+
     @classmethod
     def setUpTestData(cls):
         super(WhenSendingAPostForAValidAttributeToDelete, cls).setUpTestData()
@@ -22,6 +23,7 @@ class WhenSendingAPostForAValidAttributeToDelete(TestCaseSetup):
 
 class WhenSendingAPostForAnInvalidAttributeToDelete(TestCaseSetup):
     """This class defines the test suite for an invalid POST request to delete an attribute"""
+
     @classmethod
     def setUpTestData(cls):
         super(WhenSendingAPostForAnInvalidAttributeToDelete, cls).setUpTestData()

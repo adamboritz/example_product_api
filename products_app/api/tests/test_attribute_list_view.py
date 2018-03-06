@@ -1,16 +1,17 @@
-from django.test import TestCase
 from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
-from api.models import Attribute
+from .test_case_setup import TestCaseSetup
 
 
-class WhenSendingAGetToAttributeListView(TestCase):
+class WhenSendingAGetToAttributeListView(TestCaseSetup):
     """This class defines the test suite for a GET request to the attributes view"""
 
     @classmethod
     def setUpTestData(cls):
+        super(WhenSendingAGetToAttributeListView, cls).setUpTestData()
+
         cls.client = APIClient()
         cls.response = cls.client.get(
             reverse("attributes"),
@@ -21,11 +22,53 @@ class WhenSendingAGetToAttributeListView(TestCase):
         self.assertTrue(self.response.status_code, status.HTTP_200_OK)
 
 
-class WhenSendingAPostToAttributeListView(TestCase):
+class WhenSendingAGetToAttributeListViewWithAValidQueryString(TestCaseSetup):
+    """This is to test search behavior with a valid querystring"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(WhenSendingAGetToAttributeListViewWithAValidQueryString, cls).setUpTestData()
+
+        cls.client = APIClient()
+        cls.response = cls.client.get(
+            reverse("attributes"),
+            data={"type": "Color"},
+            format="json")
+
+    def test_should_receive_a_200_ok_response(self):
+        self.assertTrue(self.response.status_code, status.HTTP_200_OK)
+
+    def test_should_receive_one_attribute(self):
+        self.assertEqual(len(self.response.data), 1)
+
+
+class WhenSendingAGetToAttributeListViewWithAnInvalidQueryString(TestCaseSetup):
+    """This is to test search behavior with an inalid querystring"""
+
+    @classmethod
+    def setUpTestData(cls):
+        super(WhenSendingAGetToAttributeListViewWithAnInvalidQueryString, cls).setUpTestData()
+
+        cls.client = APIClient()
+        cls.response = cls.client.get(
+            reverse("attributes"),
+            data={"type2": "Color"},
+            format="json")
+
+    def test_should_receive_a_200_ok_response(self):
+        self.assertTrue(self.response.status_code, status.HTTP_200_OK)
+
+    def test_should_do_no_filtering(self):
+        self.assertEqual(len(self.response.data), 3)
+
+
+class WhenSendingAPostToAttributeListView(TestCaseSetup):
     """This class defines the test suite for a POST request to the attributes view"""
 
     @classmethod
     def setUpTestData(cls):
+        super(WhenSendingAPostToAttributeListView, cls).setUpTestData()
+
         cls.client = APIClient()
         cls.attribute_data = {
             "type": "Color",
@@ -38,22 +81,20 @@ class WhenSendingAPostToAttributeListView(TestCase):
         )
         cls.response.render()
 
-    @classmethod
-    def tearDownClass(cls):
-        Attribute.objects.all().delete()
-
     def test_should_receive_a_201_created_response(self):
         self.assertTrue(self.response.status_code, status.HTTP_201_CREATED)
 
     def test_should_have_an_id_for_created_attribute(self):
-        self.assertIn(b"id", self.response.content)
+        self.assertIn("id", self.response.data)
 
 
-class WhenSendingAnUnsupportedMethodToAttributeListView(TestCase):
+class WhenSendingAnUnsupportedMethodToAttributeListView(TestCaseSetup):
     """This class is to show that we expect to receive a bad request when trying to use an unsupported HTTP method"""
 
     @classmethod
     def setUpTestData(cls):
+        super(WhenSendingAnUnsupportedMethodToAttributeListView, cls).setUpTestData()
+
         cls.client = APIClient()
         cls.response = cls.client.delete(
             reverse("attributes"),
