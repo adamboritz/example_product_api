@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import Attribute, Product
+from .models import Attribute
+from .models import Product
 
 
 class AttributeSerializer(serializers.ModelSerializer):

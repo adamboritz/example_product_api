@@ -1,9 +1,11 @@
 import time
-from datetime import datetime, timezone
+from datetime import datetime
+from datetime import timezone
 
 from django.test import TestCase
 
-from api.models import Attribute, Product
+from api.models import Attribute
+from api.models import Product
 
 
 class WhenAddingNewProductTests(TestCase):

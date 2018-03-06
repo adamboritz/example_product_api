@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from api.models import Attribute, Product
+from api.models import Attribute
+from api.models import Product
 from api.serializers import ProductSerializer
 
 
