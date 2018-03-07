@@ -1,21 +1,15 @@
-from django.test import TestCase
-
-from api.models import Attribute
+from .test_case_with_fixture_data import TestCaseWithFixtureData
 from api.serializers import AttributeSerializer
 
 
-class WhenSerializingAnAttributeTests(TestCase):
+class WhenSerializingAnAttributeTests(TestCaseWithFixtureData):
     """This class defines the test suite for serializing an attribute."""
 
     @classmethod
     def setUpTestData(cls):
-        cls.attribute = Attribute(type="Color", value="Red")
-        cls.attribute.save()
-        cls.serializer = AttributeSerializer(instance=cls.attribute)
+        super(WhenSerializingAnAttributeTests, cls).setUpTestData()
 
-    @classmethod
-    def tearDownClass(cls):
-        Attribute.objects.all().delete()
+        cls.serializer = AttributeSerializer(instance=cls.attribute1)
 
     # As there is no custom behavior being specified, just need to test to ensure the one thing that we control is
     # being tested
@@ -25,7 +19,7 @@ class WhenSerializingAnAttributeTests(TestCase):
         self.assertCountEqual(expected_keys, self.serializer.data.keys())
 
 
-class WhenDeserializingAnAttributeWithValidDataTests(TestCase):
+class WhenDeserializingAnAttributeWithValidDataTests(TestCaseWithFixtureData):
     """This class defines the test suite for valid deserialization of an attribute."""
 
     @classmethod
@@ -40,7 +34,7 @@ class WhenDeserializingAnAttributeWithValidDataTests(TestCase):
         self.assertTrue(self.serializer.is_valid())
 
 
-class WhenDeserializingAnAttributeWithInvalidDataTests(TestCase):
+class WhenDeserializingAnAttributeWithInvalidDataTests(TestCaseWithFixtureData):
     """This class defines the test suite for invalid deserialization of an attribute."""
 
     @classmethod

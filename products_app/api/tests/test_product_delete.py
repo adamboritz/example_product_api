@@ -2,9 +2,10 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
-from .test_case_setup import TestCaseSetup
+from .test_case_with_fixture_data import TestCaseWithFixtureData
 
-class WhenSendingAPostForAValidProductToDelete(TestCaseSetup):
+
+class WhenSendingAPostForAValidProductToDelete(TestCaseWithFixtureData):
     """This class defines the test suite for a valid POST request to delete a product"""
     @classmethod
     def setUpTestData(cls):
@@ -20,7 +21,7 @@ class WhenSendingAPostForAValidProductToDelete(TestCaseSetup):
         self.assertTrue(self.response.status_code, status.HTTP_200_OK)
 
 
-class WhenSendingAPostForAnInvalidProductToDelete(TestCaseSetup):
+class WhenSendingAPostForAnInvalidProductToDelete(TestCaseWithFixtureData):
     """This class defines the test suite for an invalid POST request to delete a product"""
     @classmethod
     def setUpTestData(cls):
@@ -36,7 +37,7 @@ class WhenSendingAPostForAnInvalidProductToDelete(TestCaseSetup):
         self.assertTrue(self.response.status_code, status.HTTP_404_NOT_FOUND)
 
 
-class WhenSendingAnUnsupportedMethodToProductDeleteView(TestCaseSetup):
+class WhenSendingAnUnsupportedMethodToProductDeleteView(TestCaseWithFixtureData):
     """This class is to show that we expect to receive a bad request when trying to use an unsupported HTTP method"""
 
     @classmethod

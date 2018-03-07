@@ -4,7 +4,7 @@ from api.models import Attribute
 from api.models import Product
 
 
-class TestCaseSetup(TestCase):
+class TestCaseWithFixtureData(TestCase):
     @classmethod
     def setUpTestData(cls):
         cls.product1 = Product(name="iWatch", price=399.99, manufacturer="Apple", product_type="Smartwatch")

@@ -2,10 +2,10 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
-from .test_case_setup import TestCaseSetup
+from .test_case_with_fixture_data import TestCaseWithFixtureData
 
 
-class WhenSendingAGetToAttributeListView(TestCaseSetup):
+class WhenSendingAGetToAttributeListView(TestCaseWithFixtureData):
     """This class defines the test suite for a GET request to the attributes view"""
 
     @classmethod
@@ -22,7 +22,7 @@ class WhenSendingAGetToAttributeListView(TestCaseSetup):
         self.assertTrue(self.response.status_code, status.HTTP_200_OK)
 
 
-class WhenSendingAGetToAttributeListViewWithAValidQueryString(TestCaseSetup):
+class WhenSendingAGetToAttributeListViewWithAValidQueryString(TestCaseWithFixtureData):
     """This is to test search behavior with a valid querystring"""
 
     @classmethod
@@ -42,7 +42,7 @@ class WhenSendingAGetToAttributeListViewWithAValidQueryString(TestCaseSetup):
         self.assertEqual(len(self.response.data), 1)
 
 
-class WhenSendingAGetToAttributeListViewWithAnInvalidQueryString(TestCaseSetup):
+class WhenSendingAGetToAttributeListViewWithAnInvalidQueryString(TestCaseWithFixtureData):
     """This is to test search behavior with an inalid querystring"""
 
     @classmethod
@@ -62,7 +62,7 @@ class WhenSendingAGetToAttributeListViewWithAnInvalidQueryString(TestCaseSetup):
         self.assertEqual(len(self.response.data), 3)
 
 
-class WhenSendingAPostToAttributeListView(TestCaseSetup):
+class WhenSendingAPostToAttributeListView(TestCaseWithFixtureData):
     """This class defines the test suite for a POST request to the attributes view"""
 
     @classmethod
@@ -88,7 +88,7 @@ class WhenSendingAPostToAttributeListView(TestCaseSetup):
         self.assertIn("id", self.response.data)
 
 
-class WhenSendingAnUnsupportedMethodToAttributeListView(TestCaseSetup):
+class WhenSendingAnUnsupportedMethodToAttributeListView(TestCaseWithFixtureData):
     """This class is to show that we expect to receive a bad request when trying to use an unsupported HTTP method"""
 
     @classmethod

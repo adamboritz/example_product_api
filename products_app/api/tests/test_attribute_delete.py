@@ -2,9 +2,10 @@ from rest_framework import status
 from rest_framework.reverse import reverse
 from rest_framework.test import APIClient
 
-from .test_case_setup import TestCaseSetup
+from .test_case_with_fixture_data import TestCaseWithFixtureData
 
-class WhenSendingAPostForAValidAttributeToDelete(TestCaseSetup):
+
+class WhenSendingAPostForAValidAttributeToDelete(TestCaseWithFixtureData):
     """This class defines the test suite for a valid POST request to delete an attribute"""
 
     @classmethod
@@ -21,7 +22,7 @@ class WhenSendingAPostForAValidAttributeToDelete(TestCaseSetup):
         self.assertTrue(self.response.status_code, status.HTTP_200_OK)
 
 
-class WhenSendingAPostForAnInvalidAttributeToDelete(TestCaseSetup):
+class WhenSendingAPostForAnInvalidAttributeToDelete(TestCaseWithFixtureData):
     """This class defines the test suite for an invalid POST request to delete an attribute"""
 
     @classmethod
@@ -38,7 +39,7 @@ class WhenSendingAPostForAnInvalidAttributeToDelete(TestCaseSetup):
         self.assertTrue(self.response.status_code, status.HTTP_404_NOT_FOUND)
 
 
-class WhenSendingAnUnsupportedMethodToAttributeDeleteView(TestCaseSetup):
+class WhenSendingAnUnsupportedMethodToAttributeDeleteView(TestCaseWithFixtureData):
     """This class is to show that we expect to receive a bad request when trying to use an unsupported HTTP method"""
 
     @classmethod

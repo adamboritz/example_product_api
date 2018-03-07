@@ -1,23 +1,15 @@
-from django.test import TestCase
-
-from api.models import Attribute
-from api.models import Product
+from .test_case_with_fixture_data import TestCaseWithFixtureData
 from api.serializers import ProductSerializer
 
 
-class WhenSerializingAProductTests(TestCase):
+class WhenSerializingAProductTests(TestCaseWithFixtureData):
     """This class defines the test suite for serializing a product."""
 
     @classmethod
     def setUpTestData(cls):
-        cls.product = Product(name="Apple iPhoneX", price=999.99, manufacturer="Apple", product_type="Smartphone")
-        cls.product.save()
-        cls.serializer = ProductSerializer(instance=cls.product)
+        super(WhenSerializingAProductTests, cls).setUpTestData()
 
-    @classmethod
-    def tearDownClass(cls):
-        Product.objects.all().delete()
-        Attribute.objects.all().delete()
+        cls.serializer = ProductSerializer(instance=cls.product1)
 
     # As there is no custom behavior being specified, just need to test to ensure the one thing that we control is
     # being tested
@@ -28,7 +20,7 @@ class WhenSerializingAProductTests(TestCase):
         self.assertCountEqual(expected_keys, self.serializer.data.keys())
 
 
-class WhenDeserializingAProductWithValidDataTests(TestCase):
+class WhenDeserializingAProductWithValidDataTests(TestCaseWithFixtureData):
     """This class defines the test suite for valid deserialization of a product."""
 
     @classmethod
@@ -45,7 +37,7 @@ class WhenDeserializingAProductWithValidDataTests(TestCase):
         self.assertTrue(self.serializer.is_valid())
 
 
-class WhenDeserializingAProductWithInvalidDataTests(TestCase):
+class WhenDeserializingAProductWithInvalidDataTests(TestCaseWithFixtureData):
     """This class defines the test suite for invalid deserialization of a product."""
 
     @classmethod
