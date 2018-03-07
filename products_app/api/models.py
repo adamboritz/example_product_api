@@ -3,9 +3,10 @@ from django.utils import timezone
 
 
 class Attribute(models.Model):
-    """The representation of attribute. In a more complex system there would be a separate model for attribute types
-    and those would be assigned to a product type and the attribute values would be related to the attribute type, but
-    to limit the scope of this exercise, I've drastically oversimplified that representation
+    """
+    The representation of attribute. In a more complex system there would be a separate model for attribute types and
+    those would be assigned to a product type and the attribute values would be related to the attribute type, but to
+    limit the scope of this exercise, I've drastically oversimplified that representation.
     """
     type = models.CharField(max_length=255)
     value = models.CharField(max_length=255)
@@ -18,6 +19,10 @@ class Attribute(models.Model):
 
 
 class Product(models.Model):
+    """
+    The representation of a product with some fields that are consistent across all products, so to me they fit better
+    here rather than as an attribute.
+    """
     name = models.CharField(max_length=255)
     price = models.DecimalField(decimal_places=2, max_digits=20)
     manufacturer = models.CharField(max_length=255)
