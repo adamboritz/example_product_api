@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('price', models.DecimalField(decimal_places=2, max_digits=20)),
                 ('manufacturer', models.CharField(max_length=255)),
                 ('product_type', models.CharField(max_length=255)),
-                ('release_date', models.DateField(default=django.utils.timezone.now)),
+                ('release_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('created_at', models.DateTimeField(auto_now_add=True)),
                 ('modified_at', models.DateTimeField(auto_now=True)),
                 ('attributes', models.ManyToManyField(to='api.Attribute')),
