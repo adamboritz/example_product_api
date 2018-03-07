@@ -11,17 +11,27 @@ from .serializers import ProductSerializer
 
 
 class AttributeList(generics.ListCreateAPIView):
-    """Displays multiple attributes, allows for filtering on the attributes collection and creation of new attributes"""
+    """
+    get:
+    Return a list of all the existing attributes. Can be filtered down on type or value.
+
+    post:
+    Creates a new attribute.
+    """
     queryset = Attribute.objects.all()
     serializer_class = AttributeSerializer
     filter_backends = (DjangoFilterBackend,)
     filter_fields = ('type', 'value')
 
 
-class AttributeDetail(mixins.RetrieveModelMixin,
-                          mixins.UpdateModelMixin,
-                          generics.GenericAPIView):
-    """Displays an individual attribute and allows updating of the attribute"""
+class AttributeDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
+    """
+    get:
+    Return an individual attribute.
+
+    post:
+    Updates an individual attribute.
+    """
     queryset = Attribute.objects.all()
     serializer_class = AttributeSerializer
 
@@ -32,9 +42,11 @@ class AttributeDetail(mixins.RetrieveModelMixin,
         return self.update(request, *args, **kwargs)
 
 
-class AttributeDelete(mixins.DestroyModelMixin,
-                      generics.GenericAPIView):
-    """Handles deletion of an attribute"""
+class AttributeDelete(mixins.DestroyModelMixin, generics.GenericAPIView):
+    """
+    post:
+    Deletes an individual attribute.
+    """
     queryset = Attribute.objects.all()
     serializer_class = AttributeSerializer
 
@@ -43,7 +55,14 @@ class AttributeDelete(mixins.DestroyModelMixin,
 
 
 class ProductList(generics.ListCreateAPIView):
-    """Displays multiple products, allows for filtering on the products collection and creation of new products"""
+    """
+    get:
+    Return a list of all the existing products. Can be filtered down on all product non-id fields and attribute type and
+    attribute value.
+
+    post:
+    Creates a new product.
+    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
     filter_backends = (DjangoFilterBackend,)
@@ -51,10 +70,14 @@ class ProductList(generics.ListCreateAPIView):
                      'attributes__type', 'attributes__value')
 
 
-class ProductDetail(mixins.RetrieveModelMixin,
-                          mixins.UpdateModelMixin,
-                          generics.GenericAPIView):
-    """Displays an individual product and allows updating of the product"""
+class ProductDetail(mixins.RetrieveModelMixin, mixins.UpdateModelMixin, generics.GenericAPIView):
+    """
+    get:
+    Return an individual product.
+
+    post:
+    Updates an individual product.
+    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -65,9 +88,11 @@ class ProductDetail(mixins.RetrieveModelMixin,
         return self.update(request, *args, **kwargs)
 
 
-class ProductDelete(mixins.DestroyModelMixin,
-                      generics.GenericAPIView):
-    """Handles deletion of a product"""
+class ProductDelete(mixins.DestroyModelMixin, generics.GenericAPIView):
+    """
+    post:
+    Deletes an individual product.
+    """
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
 
@@ -75,9 +100,11 @@ class ProductDelete(mixins.DestroyModelMixin,
         return self.destroy(request, *args, **kwargs)
 
 
-class ProductAddAttribute(mixins.UpdateModelMixin,
-                          generics.GenericAPIView):
-    """Allows for adding an attribute to a product"""
+class ProductAddAttribute(mixins.UpdateModelMixin, generics.GenericAPIView):
+    """
+    post:
+    Adds specified attribute to specified product.
+    """
     queryset = Product.objects.all()
     serializer_class = ProductAddAttributeSerializer
 
@@ -85,9 +112,11 @@ class ProductAddAttribute(mixins.UpdateModelMixin,
         return self.partial_update(request, *args, **kwargs)
 
 
-class ProductRemoveAttribute(mixins.UpdateModelMixin,
-                          generics.GenericAPIView):
-    """Allows for adding an attribute to a product"""
+class ProductRemoveAttribute(mixins.UpdateModelMixin, generics.GenericAPIView):
+    """
+    post:
+    Removes specified attribute from specified product.
+    """
     queryset = Product.objects.all()
     serializer_class = ProductRemoveAttributeSerializer
 
