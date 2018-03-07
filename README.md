@@ -10,6 +10,12 @@ First if on a POSIX based system `source bin/activate` and if on Windows `\path\
 
 Then `pip install -Ur requirements.txt`.
 
+If the sqlite db file is deleted, run the following (from parent directory of repository): 
+```
+cd products_app
+python manage.py migrate
+```
+
 (from parent directory of repository):
 ```
 cd products_app
@@ -66,6 +72,9 @@ All endpoints have paging on with a default limit of 10. That limit can be incre
 The add and remove attribute routes expect the request body to have a key-value pair with the key being "attribute_id" and the value being a valid attribute id.
 
 For both the product and attribute models the update route expects all non-readonly fields to be supplied.
+
+## Note about unit tests
+I've written my unit tests in the Context/Specification pattern, as I find that a little more simple to structure and understand than AAA.
 
 ## Learnings
 This was a great experience to learn Django Rest Framework. In retrospect, I may have tried to use Viewsets instead of Views to see if the amount of necessary code could have been reduced. Also, I would not have made all fields required on updates if I had more time to play around with that, and would've allowed partial updates via POST, even though that's not completely RESTFUL ideals, since through conversation the acceptable HTTP methods were limited to GET and POST. Having DELETE available would've allowed for some code reduction as the individual product/attribute view could've handled deletes, then. Also, with more time I definitely would've broken the view classes up into individual files inside of a views directory.
