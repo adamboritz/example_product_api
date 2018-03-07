@@ -5,7 +5,7 @@ from .models import Product
 
 
 class AttributeSerializer(serializers.ModelSerializer):
-    """Definition for how to serialize an Attribute"""
+    """Definition for how to serialize an attribute."""
 
     class Meta:
         model = Attribute
@@ -14,6 +14,7 @@ class AttributeSerializer(serializers.ModelSerializer):
 
 
 class ProductSerializer(serializers.ModelSerializer):
+    """Definition for how to serialize a product."""
     attributes = AttributeSerializer(read_only=True, many=True)
 
     class Meta:
@@ -24,6 +25,7 @@ class ProductSerializer(serializers.ModelSerializer):
 
 
 class ProductAddAttributeSerializer(serializers.ModelSerializer):
+    """Definition of how to serialize a product with an attribute being added to it."""
     attributes = AttributeSerializer(read_only=True, many=True)
     attribute_id = serializers.PrimaryKeyRelatedField(queryset=Attribute.objects.all(), write_only=True)
 
@@ -42,6 +44,7 @@ class ProductAddAttributeSerializer(serializers.ModelSerializer):
 
 
 class ProductRemoveAttributeSerializer(serializers.ModelSerializer):
+    """Definition of how to serialize a product with an attribute being removed from it."""
     attributes = AttributeSerializer(read_only=True, many=True)
     attribute_id = serializers.PrimaryKeyRelatedField(queryset=Attribute.objects.all(), write_only=True)
 
